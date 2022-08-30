@@ -7,8 +7,13 @@ class Stock < ApplicationRecord
       endpoint: 'https://cloud.iexapis.com/v1'
     )
 
-    response = client.quote(ticker_symbol)
-    response.to_a
-    response["iex_ask_price"]
+    begin
+      stock_data = client.quote(ticker_symbol)
+      stock_data.to_a
+
+      new(ticker: ticker_symbol, name: client.company(ticker_symbol).company_name, last_price: stock_data["latest_price"])
+    rescue => exception
+      return nil
+    end
   end
 end
