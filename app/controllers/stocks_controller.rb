@@ -1,5 +1,4 @@
 class StocksController < ApplicationController
-
   def search
     if params[:stock].present?
       @stock = Stock.new_lookup(params[:stock])
@@ -20,5 +19,4 @@ class StocksController < ApplicationController
       end
     end
   end
-
 end
